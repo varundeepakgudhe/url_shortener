@@ -34,7 +34,7 @@ def get_urls(db: Session = Depends(get_db)):
     return crud.get_all_urls(db)
 
 
-@app.get("/{short_code}")
+@app.get("/r/{short_code}")
 def redirect_to_original(short_code: str, db: Session = Depends(get_db)):
     db_url = crud.get_url_by_code(db, short_code)
     if not db_url:
