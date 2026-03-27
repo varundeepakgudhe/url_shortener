@@ -5,7 +5,7 @@ pipeline {
         AWS_REGION = 'us-east-1'
         AWS_ACCOUNT_ID = '362437996214'
         ECR_REPO = 'url-shortener'
-        IMAGE_TAG = "${BUILD_NUMBER}"
+        IMAGE_TAG = "${GIT_COMMIT[0..6]}"
         IMAGE_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"
         EKS_CLUSTER_NAME = 'vdgM-eks-cluster'
     }
