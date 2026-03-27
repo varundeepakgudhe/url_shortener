@@ -8,7 +8,7 @@ async function shortenUrl() {
     }
   
     try {
-      const response = await fetch("http://127.0.0.1:8001/api/shorten", {
+      const response = await fetch("/api/shorten", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -23,7 +23,7 @@ async function shortenUrl() {
         return;
       }
   
-      const shortUrl = `http://127.0.0.1:8001/${data.short_code}`;
+      const shortUrl = `${window.location.origin}/r/${data.short_code}`;
       result.innerHTML = `Short URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
     } catch (error) {
       result.innerText = "Backend not reachable";
