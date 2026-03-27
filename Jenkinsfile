@@ -7,6 +7,7 @@ pipeline {
         ECR_REPO = 'url-shortener'
         IMAGE_TAG = "${BUILD_NUMBER}"
         IMAGE_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"
+        EKS_CLUSTER_NAME = 'vdgM-eks-cluster'
     }
 
     stages {
@@ -36,8 +37,18 @@ pipeline {
                 '''
             }
         }
-    }
+    
+        stage('Deploy to EKS') {
+            steps {
+                sh '''
+                    aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
 
+                    sed "s|<IMAGE_URI>|${IMAGE_URI}|g" deployment.yaml | kubectl apply -f -
+                    kubectl apply -f service.yaml
+                '''
+            }
+        }
+    }
     post {
         success {
             echo "Image pushed successfully: ${IMAGE_URI}"
