@@ -51,7 +51,7 @@ pipeline {
     }
     post {
         success {
-            echo "Image pushed successfully: ${IMAGE_URI}"
+            echo "Deployment successful. Image: ${IMAGE_URI}"
         }
         failure {
             echo "Pipeline failed"
